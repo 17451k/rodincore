@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007, 2018 ETH Zurich and others.
+ * Copyright (c) 2007, 2021 ETH Zurich and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,6 +19,7 @@
  *     Systerel - added messages for dialogs
  *     Systerel - added messages for the new prefix preference mechanism
  *     Systerel - added message for the simplify proof preference
+ *     ISP RAS - added messages for interactive tactics
  *******************************************************************************/
 package org.eventb.internal.ui.utils;
 

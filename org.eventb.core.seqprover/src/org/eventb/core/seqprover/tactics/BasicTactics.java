@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2006, 2014 ETH Zurich and others.
+ * Copyright (c) 2006, 2021 ETH Zurich and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *     ETH Zurich - initial API and implementation
  *     Systerel - added support for cancellation in several tacticals
+ *     ISP RAS - added firstSuccessful tactic
  *******************************************************************************/
 package org.eventb.core.seqprover.tactics;
 
@@ -460,6 +461,22 @@ public class BasicTactics {
 		};
 	}
 
+	/**
+	 * Simultaneously run given tactics until one of them succeeds.
+	 * 
+	 * <p>
+	 * Applying the resulting tactic applies the given tactics simultaneously,
+	 * until one of them succeeds.
+	 * </p>
+	 * <p>
+	 * The resulting tactic fails iff all tactics failed.
+	 * </p>
+	 * 
+	 * @param tactics
+	 * 			Array of tactics to compose
+	 * @return
+	 * 			The resulting tactic.
+	 */
 	public static ITactic firstSuccessful(final ITactic ... tactics){
 		return new ITactic() {
 
@@ -502,7 +519,7 @@ public class BasicTactics {
 				}
 
 				// There is no need to waste time waiting for all threads to be terminated
-				return "All composed tactics failed";
+				return "All tactics failed";
 			}
 		};
 	}
