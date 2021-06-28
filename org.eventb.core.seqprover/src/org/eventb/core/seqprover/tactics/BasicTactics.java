@@ -483,16 +483,16 @@ public class BasicTactics {
 			@Override
 			public Object apply(IProofTreeNode pt, IProofMonitor pm) {
 				final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(tactics.length);
-				final CompletionService<ProofTreeNode> service = new ExecutorCompletionService<>(executor);
-				List<Future<ProofTreeNode>> futures = new ArrayList<>();
+				final CompletionService<ITactic> service = new ExecutorCompletionService<>(executor);
+				List<Future<ITactic>> futures = new ArrayList<>();
 
 				for (ITactic tactic : tactics) {
-					Callable<ProofTreeNode> task = () -> {
+					Callable<ITactic> task = () -> {
 						ProofTreeNode localPT = new ProofTreeNode((ProofTreeNode) pt);
 						Object tacticApp = tactic.apply(localPT, pm);
 
 						if (tacticApp == null) {
-							return localPT;
+							return tactic;
 						}
 
 						return null;
@@ -508,9 +508,9 @@ public class BasicTactics {
 							return Messages.tactic_cancelled;
 						}
 
-						ProofTreeNode localPT = service.take().get();
-						if (localPT != null) {
-							((ProofTreeNode) pt).updateFields(localPT);
+						ITactic tactic = service.take().get();
+						if (tactic != null) {
+							tactic.apply(pt, pm);
 							return null;
 						}
 					} catch (InterruptedException | ExecutionException e) {

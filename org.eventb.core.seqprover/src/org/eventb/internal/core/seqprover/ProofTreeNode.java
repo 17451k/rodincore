@@ -167,20 +167,9 @@ public final class ProofTreeNode implements IProofTreeNode {
 	 * 				node to copy
 	 */
 	public ProofTreeNode(ProofTreeNode node) {
-		this.sequent = node.sequent;
-		updateFields(node);
-	}
-	
-	/**
-	 * Update fields of the current node using fields of another
-	 * 
-	 * @param node
-	 * 				node to copy
-	 */
-	public void updateFields(ProofTreeNode node) {
-		assert this.sequent == node.sequent;
 		this.proofTree = node.proofTree;
 		this.parent = node.parent;
+		this.sequent = node.sequent;
 		this.rule = node.rule;
 		if (node.children == null) 
 			this.children = null;
